@@ -1,0 +1,158 @@
+<div class="container mt-5">
+  <div class="card shadow p-4">
+    <h3 class="text-center mb-4">{{ editMode ? 'Update User' : 'Register New User' }}</h3>
+
+    <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+      <div class="row">
+        <div class="col-md-6 mb-3">
+           <label>First Name:</label>
+          <input class="form-control" formControlName="firstName" placeholder="First Name" required>
+          <div class="text-danger" *ngIf="f['firstName'].invalid && f['firstName'].touched">First Name is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Last Name:</label>
+          <input class="form-control" formControlName="lastName" placeholder="Last Name" required>
+          <div class="text-danger" *ngIf="f['lastName'].invalid && f['lastName'].touched">Last Name is Required</div>
+        </div>
+
+        <div class="col-12 mb-3">
+            <label>Address:</label>
+          <input class="form-control" formControlName="address" placeholder="Address" required>
+          <div class="text-danger" *ngIf="f['address'].invalid && f['address'].touched">Address is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>City:</label>
+          <input class="form-control" formControlName="city" placeholder="City" required>
+          <div class="text-danger" *ngIf="f['city'].invalid && f['city'].touched">City is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>State:</label>
+          <select class="form-select" formControlName="state" required>
+            <option value="">Select State</option>
+            <option *ngFor="let s of states" [value]="s">{{s}}</option>
+          </select>
+          <div class="text-danger" *ngIf="f['state'].invalid && f['state'].touched">State is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Country Code:</label>
+          <input class="form-control" type="text" formControlName="countryCode" placeholder="Country Code" required>
+          <div class="text-danger" *ngIf="f['countryCode'].invalid && f['countryCode'].touched">Country Code is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Date Of Birth:</label>
+          <input class="form-control" type="date" formControlName="dob" [max]="today" required>
+          <div class="text-danger" *ngIf="f['dob'].invalid && f['dob'].touched">DOB is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Age:</label>
+          <input class="form-control" type="number" formControlName="age" placeholder="Age" required min="1" max="120">
+          <div class="text-danger" *ngIf="f['age'].invalid && f['age'].touched">Age is Required</div>
+        </div>
+        
+        <div class="col-md-6 mb-3" >
+           <label class="gender-label-space">Gender:</label>
+          <div class="form-check form-check-inline" >
+            <input class="form-check-input" type="radio" value="male" formControlName="gender" id="male">
+            <label class="form-check-label" for="male"> Male</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" value="female" formControlName="gender" id="female">
+            <label class="form-check-label" for="female"> Female</label>
+          </div>
+          <div class="text-danger" *ngIf="f['gender'].invalid && f['gender'].touched">Gender is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Phone Number:</label>
+          <input class="form-control" type="text" formControlName="phone" placeholder="Phone Number" required>
+          <div class="text-danger" *ngIf="f['phone'].invalid && f['phone'].touched">Valid 10-digit Phone is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Email(Username):</label>
+          <input class="form-control" type="email" formControlName="email" placeholder="Email(Username)" required>
+          <div class="text-danger" *ngIf="f['email'].invalid && f['email'].touched">Valid Email is Required</div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <label>Password:</label>
+          <input class="form-control" type="password" formControlName="password" placeholder="Password" required>
+          <div class="text-danger" *ngIf="f['password'].invalid && f['password'].touched">Minimum 6 characters</div>
+        </div>
+        
+
+        <div class="col-md-6 mb-3">
+            <label>Confirm Password:</label>
+           <input class="form-control" type="password" formControlName="confirmPassword" placeholder="Confirm Password" required>
+          <div class="text-danger" *ngIf="f['confirmPassword'].invalid && f['confirmPassword'].touched">
+               Confirm Password is Required
+       </div>
+          <div class="text-danger" *ngIf="registrationForm.errors?.['passwordsMismatch'] && f['confirmPassword'].touched">
+                Passwords do not match
+          </div>
+      </div>
+        
+      </div>
+
+      <div class="text-center">
+        <button class="btn btn-primary me-2" type="submit" [disabled]="registrationForm.invalid">
+          {{editMode ? 'Update' : 'Submit'}}
+        </button>
+        <a routerLink="/login" class="btn btn-outline-secondary">Back to Login</a>
+      </div>
+    </form>
+  </div>
+
+  <hr class="my-4">
+
+  <h3 class="text-center mb-3">Registered Users</h3>
+  <div class="table-responsive">
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First</th>
+          <th>Last</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>State</th>
+          <th>Code</th>
+          <th>DOB</th>
+          <th>Age</th>
+          <th>Gender</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Password</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ user.firstName }}</td>
+          <td>{{ user.lastName }}</td>
+          <td>{{ user.address }}</td>
+          <td>{{ user.city }}</td>
+          <td>{{ user.state }}</td>
+          <td>{{ user.countryCode }}</td>
+          <td>{{ user.dob }}</td>
+          <td>{{ user.age }}</td>
+          <td>{{ user.gender }}</td>
+          <td>{{ user.phone }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.password ? '******' : '' }}</td>
+          <td>
+            <button class="btn btn-sm btn-warning me-1" (click)="editUser(i)">Edit</button>
+            <button class="btn btn-sm btn-danger" (click)="deleteUser(i)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

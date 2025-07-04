@@ -1,0 +1,31 @@
+<div> 
+    <form [formGroup] = "form" (ngSubmit) = "onSubmit()">
+        <div>
+            <label for ="username">Username:</label>
+             <input formControlName="username" placeholder="Enter username"/><br>
+             <p *ngIf="form.get('username')?.invalid && form.get('username')?.touched" >
+                Enter a valid username
+             </p>
+        </div>
+        
+        <div>
+            <label for ="password">Password:</label>
+             <input type = "password" formControlName="password" placeholder="Enter password"/><br>
+             <p *ngIf="form.get('password')?.invalid && form.get('password')?.touched" >
+                password must be atleast 6 digits long
+             </p>
+        </div>
+       
+        <button type="submit" [disabled]="form.invalid">Login</button>
+    </form>
+    
+    <div id="one">
+        <input type="text" [(ngModel)] = "user" placeholder="type something">
+        <p>you typed:{{user}}</p>
+    </div>
+</div>
+
+
+<app-child name="hello"></app-child>
+
+<app-child (eventEmit)="receiveData($event)"></app-child>
